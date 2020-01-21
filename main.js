@@ -12,12 +12,13 @@ function getAllRestaurants() {
 function searchFromName(name, keyword) {
   return name.toUpperCase().includes(keyword.toUpperCase());
 }
+
 function searchFromDescription(desc, keyword) {
   return desc.toUpperCase().includes(keyword.toUpperCase());
 }
 
 function searchKeyword(keyword) {
-  return function filter(elem) {
+  return function filterByKeyword(elem) {
     // let result = false;
     if (searchFromName(elem.name, keyword)) {
       return (true);
@@ -35,30 +36,6 @@ function searchKeyword(keyword) {
     return (false);
   };
 }
-
-// TODO: LEN 1
-function filterRestaurants(restaurants, query) {
-  let i = 0;
-  const results = [];
-  const keyword = query.str.toUpperCase();
-  while (i < restaurants.length) {
-    if (searchFromName(restaurants[i].name, keyword)
-    || searchFromDescription(restaurants[i].description, keyword)) {
-      results.push(restaurants[i]);
-    } else {
-      let j = 0;
-      while (j < restaurants[i].tags.length) {
-        if (restaurants[i].tags[j].toUpperCase().includes(keyword)) {
-          results.push(restaurants[i]);
-        }
-        j += 1;
-      }
-    }
-    i += 1;
-  }
-  return results;
-}
-
 console.log(getAllRestaurants().filter(searchKeyword('AFRICAN')));
 // console.log(filterRestaurants(getAllRestaurants(), { str: 'KAIVO' }));
 
