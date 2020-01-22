@@ -3,7 +3,6 @@
 [Assignment](https://github.com/woltapp/summer2020) was **very fun**!
 
 ## Code overview
-My code has:
 * No external dependencies - **No technical debt**
 * No magic numbers - **Easier to Read**
 * No anonymous functions - **Easier to debug**
