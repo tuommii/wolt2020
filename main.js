@@ -2,11 +2,38 @@
 // const qs = require('querystring');
 const fs = require('fs');
 
-// TODO: Validate blurhash
+const NEAR = 3.0;
+const KM = 1.609344;
+// Indexes in location array
+const LON = 0;
+const LAT = 1;
+const MIN_KEYWORD_LEN = 1;
+
 function getAllRestaurants() {
   const raw = fs.readFileSync('./restaurants.json');
   const data = JSON.parse(raw);
   return data.restaurants;
+}
+
+// https://www.geodatasource.com/developers/javascript
+function distance(lat1, lon1, lat2, lon2) {
+  if ((lat1 === lat2) && (lon1 === lon2)) {
+    return 0;
+  }
+  const radlat1 = (Math.PI * lat1) / 180;
+  const radlat2 = (Math.PI * lat2) / 180;
+  const theta = lon1 - lon2;
+  const radtheta = (Math.PI * theta) / 180;
+  let dist = Math.sin(radlat1) * Math.sin(radlat2);
+  dist += Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+  if (dist > 1) {
+    dist = 1;
+  }
+  dist = Math.acos(dist);
+  dist = (dist * 180) / Math.PI;
+  dist = dist * 60 * 1.1515;
+  dist *= KM;
+  return dist;
 }
 
 function searchFromName(name, keyword) {
@@ -17,15 +44,26 @@ function searchFromDescription(desc, keyword) {
   return desc.toUpperCase().includes(keyword.toUpperCase());
 }
 
-function searchKeyword(keyword) {
-  return function filterByKeyword(elem) {
-    // let result = false;
+// Check not 0
+function isNear(value, location, lat, lon) {
+  return (distance(location[LAT], location[LON], lat, lon) < value);
+}
+
+// MIN_LEN 1
+// Maybe MAX_LEN
+function search(keyword, lat, lon) {
+  return function applyFilters(elem) {
+    if (!(isNear(NEAR, elem.location, lat, lon))) {
+      return (false);
+    }
+    if (keyword.length < MIN_KEYWORD_LEN) {
+      return (true);
+    }
     if (searchFromName(elem.name, keyword)) {
       return (true);
     } if (searchFromDescription(elem.description, keyword)) {
       return (true);
     }
-    // TODO: Change this also
     let i = 0;
     while (i < elem.tags.length) {
       if (elem.tags[i].toUpperCase().includes(keyword)) {
@@ -36,7 +74,17 @@ function searchKeyword(keyword) {
     return (false);
   };
 }
-console.log(getAllRestaurants().filter(searchKeyword('AFRICAN')));
+const arr = getAllRestaurants().filter(search('japan', 60.19062649, 24.90092468));
+console.log(arr);
+// arr.forEach((elem) => {
+//   // console.log(elem.location[0]);
+//   // console.log(elem.location[1]);
+//   if (distance(elem.location[1], elem.location[0], 60.19062649, 24.90092468, 'K') < 3.0) {
+//     console.log(elem);
+//   }
+// });
+
+
 // console.log(filterRestaurants(getAllRestaurants(), { str: 'KAIVO' }));
 
 // Test this
