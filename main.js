@@ -4,10 +4,10 @@ const fs = require('fs');
 
 const NEAR = 3.0;
 const KM = 1.609344;
+const MIN_KEYWORD_LEN = 1;
 // Indexes in location array
 const LON = 0;
 const LAT = 1;
-const MIN_KEYWORD_LEN = 1;
 
 function getAllRestaurants() {
   const raw = fs.readFileSync('./restaurants.json');
@@ -44,6 +44,17 @@ function searchFromDescription(desc, keyword) {
   return desc.toUpperCase().includes(keyword.toUpperCase());
 }
 
+function searchFromTags(tags, keyword) {
+  let i = 0;
+  while (i < tags.length) {
+    if (tags[i].toUpperCase().includes(keyword.toUpperCase())) {
+      return true;
+    }
+    i += 1;
+  }
+  return false;
+}
+
 // Check not 0
 function isNear(value, location, lat, lon) {
   return (distance(location[LAT], location[LON], lat, lon) < value);
@@ -63,18 +74,20 @@ function search(keyword, lat, lon) {
       return (true);
     } if (searchFromDescription(elem.description, keyword)) {
       return (true);
+    } if (searchFromTags(elem.tags, keyword)) {
+      return (true);
     }
-    let i = 0;
-    while (i < elem.tags.length) {
-      if (elem.tags[i].toUpperCase().includes(keyword)) {
-        return true;
-      }
-      i += 1;
-    }
+    // let i = 0;
+    // while (i < elem.tags.length) {
+    //   if (elem.tags[i].toUpperCase().includes(keyword)) {
+    //     return true;
+    //   }
+    //   i += 1;
+    // }
     return (false);
   };
 }
-const arr = getAllRestaurants().filter(search('japan', 60.19062649, 24.90092468));
+const arr = getAllRestaurants().filter(search('', 60.19062649, 24.90092468));
 console.log(arr);
 // arr.forEach((elem) => {
 //   // console.log(elem.location[0]);

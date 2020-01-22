@@ -14,5 +14,8 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.0",
     "mocha": "^7.0.0"
+  },
+  "engines": {
+	  "node": ">=8.10.0"
   }
 }

@@ -5,7 +5,6 @@
 ## Code overview
 * No external dependencies - **No technical debt**
 * No magic numbers - **Easier to Read**
-* No anonymous functions - **Easier to debug**
 * Eslint with airbnb-base - Like
 Wolt [seem's](https://github.com/woltapp/redux-autoloader/blob/master/.eslintrc) to use
 
@@ -13,6 +12,7 @@ Wolt [seem's](https://github.com/woltapp/redux-autoloader/blob/master/.eslintrc)
 ```npm start```
 
 ## How to test it
+```npm i```
 ```npm test```
 
 ## Testing Endpoint with curl
