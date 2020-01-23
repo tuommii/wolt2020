@@ -52,7 +52,7 @@ function isNear(distance, location, lat, lon) {
 
 function search(keyword, lat, lon) {
   return function applyFilters(elem) {
-    // Doesn't matter if keyword is found if distance is >= 3.0
+    // Doesn't matter if keyword is found when distance is >= 3.0
     if (!(isNear(NEAR, elem.location, lat, lon))) {
       return (false);
     }
