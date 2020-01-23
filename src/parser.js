@@ -19,7 +19,7 @@ function isQueryValid(query) {
   if (isNaN(query.lat) || isNaN(query.lon)) {
     return false;
   }
-  if (!query.str.length)
+  if (!query.str.length || !query.lat.length || !query.lon.length)
     return false;
   return true;
 }
