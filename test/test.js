@@ -59,7 +59,7 @@ describe('parseQuery', () => {
       assert.deepEqual(parseQuery(url), wanted);
     });
     it("should be valid if extra data is also provided", () => {
-      assert.deepEqual(parseQuery(url), wanted);
+      assert.deepEqual(parseQuery(url2), wanted);
     });
   });
 
