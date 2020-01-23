@@ -25,39 +25,50 @@ function getQuery(str) {
 }
 
 function parseURL(url) {
-  const arr = req.url.split('/restaurants');
+  const arr = url.split('/restaurants');
   if (arr.length !== 2) {
     return null;
   }
   const query = getQuery(arr[1]);
-  if (query.str === undefined) {
-    return (null);
+  console.log(query);
+  if (query.str === undefined || query.lat == undefined || query.lon == undefined) {
+    return null;
   }
-  if ((query.lat === undefined || query.lon === undefined) || (typeof query.lat !== 'number' || typeof query.lon !== 'number')) {
-    return (null);
+  if (isNaN(query.lat) || isNaN(query.lon)) {
+	  return null;
   }
+  if (!query.str.length)
+    return null;
+	return query
 }
 
 function testaa(restaurants) {
-  return function searchHandle(req, res) {
-    const { url } = req;
-    if (url === '/favicon.ico') {
-      // Prevent logging
-    } else {
-      const arr = req.url.split('/restaurants');
-      if (arr.length === 2) {
-        const query = getQuery(arr[1]);
-        if (query.str === undefined) {
-          query.str = '';
-        }
-        res.write(JSON.stringify(query));
-        res.end();
-        return;
-      }
-      // const results = restaurants.filter(search(query.str, query.lat, query.lon));
-      res.write('Hire Me!');
+	return function searchHandle(req, res) {
+		const { url } = req;
+		if (url === '/favicon.ico') {
+			// Prevent logging
+		} else {
+			//   const arr = req.url.split('/restaurants');
+			//   if (arr.length === 2) {
+				//     const query = getQuery(arr[1]);
+				//     if (query.str === undefined) {
+					//       query.str = '';
+					//     }
+    const query = parseURL(url);
+    if (query === null)
+    {
+      res.write('{"message": "Error in query"}');
       res.end();
+      return ;
     }
+		console.log(query);
+    res.write(JSON.stringify(restaurants.filter(search(query.str, query.lat, query.lon))));
+    res.end();
+    return;
+    }
+      // const results = restaurants.filter(search(query.str, query.lat, query.lon));
+    //   res.write('Hire Me!');
+    //   res.end();
   };
 }
 // http://localhost:3000/search?q=dsdsd&lat=60.17045&lon=24.93147
