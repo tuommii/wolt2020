@@ -9,11 +9,6 @@ function getAllRestaurants() {
   return data.restaurants;
 }
 
-// const arr = getAllRestaurants().filter(search('', 60.19062649, 24.90092468));
-// console.log(arr);
-
-
-// Test this
 function getQuery(str) {
   const obj = qs.parse(str);
   const query = {
@@ -25,54 +20,49 @@ function getQuery(str) {
 }
 
 function parseURL(url) {
+  console.log(url);
+  if (!url.startsWith('/restaurants/'))
+    return (null);
   const arr = url.split('/restaurants');
   if (arr.length !== 2) {
     return null;
   }
   const query = getQuery(arr[1]);
-  console.log(query);
-  if (query.str === undefined || query.lat == undefined || query.lon == undefined) {
-    return null;
-  }
-  if (isNaN(query.lat) || isNaN(query.lon)) {
-	  return null;
-  }
-  if (!query.str.length)
-    return null;
-	return query
+  return query
 }
 
-function testaa(restaurants) {
+function isQueryValid(query) {
+  if (query === null)
+    return false;
+  if (query.str === undefined || query.lat == undefined || query.lon == undefined) {
+    return false;
+  }
+  if (isNaN(query.lat) || isNaN(query.lon)) {
+	  return false;
+  }
+  if (!query.str.length)
+    return false;
+  return true;
+}
+
+function createEndpoint(restaurants) {
 	return function searchHandle(req, res) {
 		const { url } = req;
 		if (url === '/favicon.ico') {
 			// Prevent logging
-		} else {
-			//   const arr = req.url.split('/restaurants');
-			//   if (arr.length === 2) {
-				//     const query = getQuery(arr[1]);
-				//     if (query.str === undefined) {
-					//       query.str = '';
-					//     }
+		}
     const query = parseURL(url);
-    if (query === null)
-    {
-      res.write('{"message": "Error in query"}');
+    if (!isQueryValid(query)) {
+      res.write('{"message": "Error"}');
       res.end();
-      return ;
+      return;
     }
-		console.log(query);
     res.write(JSON.stringify(restaurants.filter(search(query.str, query.lat, query.lon))));
     res.end();
-    return;
-    }
-      // const results = restaurants.filter(search(query.str, query.lat, query.lon));
-    //   res.write('Hire Me!');
-    //   res.end();
   };
 }
 // http://localhost:3000/search?q=dsdsd&lat=60.17045&lon=24.93147
 // Blurhash
-http.createServer(testaa(getAllRestaurants())).listen(process.env.PORT, () => {
-  // getAllRestaurants();
+http.createServer(createEndpoint(getAllRestaurants())).listen(process.env.PORT, () => {
+
 });
