@@ -10,7 +10,7 @@ describe('Array', () => {
 });
 
 describe('parseQuery', () => {
-  const url = "/restaurants/search?q=sushi&lat=60.17045&lon=24.93147";
+  const url = "/restaurants/search?q=sushi";
   const url2 = "/error/search?q=sushi&lat=60.17045&lon=24.93147";
   const url3 = "/restaurants/";
   const url4 = "/restaurants/search?q=&lat=60.17045&lon=24.93147";
@@ -20,6 +20,9 @@ describe('parseQuery', () => {
   const url8 = "/restaurants/search?q=sushi&lat=60.17045&lon=abc";
 
   describe('null tests', () => {
+    it("should return null if no lat and lon provided", () => {
+      assert.equal(parseQuery(url), null);
+    });
     it("should return null if url doesn't start with /restaurants/", () => {
       assert.equal(parseQuery(url2), null);
     });
@@ -43,4 +46,21 @@ describe('parseQuery', () => {
       assert.equal(parseQuery(url8), null);
     });
   });
+
+  describe('legal tests', () => {
+    const url = "/restaurants/search?q=sushi&lat=60.17045&lon=24.93147";
+    const url2 = "/restaurants/search?q=sushi&lat=60.17045&lon=24.93147&name=miikka";
+    const wanted = {
+      str: "sushi",
+      lat: "60.17045",
+      lon: "24.93147"
+    };
+    it("should be valid if all data is provided", () => {
+      assert.deepEqual(parseQuery(url), wanted);
+    });
+    it("should be valid if extra data is also provided", () => {
+      assert.deepEqual(parseQuery(url), wanted);
+    });
+  });
+
 });
