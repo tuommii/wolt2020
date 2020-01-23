@@ -24,8 +24,22 @@ function getQuery(str) {
   return query;
 }
 
+function parseURL(url) {
+  const arr = req.url.split('/restaurants');
+  if (arr.length !== 2) {
+    return null;
+  }
+  const query = getQuery(arr[1]);
+  if (query.str === undefined) {
+    return (null);
+  }
+  if ((query.lat === undefined || query.lon === undefined) || (typeof query.lat !== 'number' || typeof query.lon !== 'number')) {
+    return (null);
+  }
+}
+
 function testaa(restaurants) {
-  return function searchHandle2(req, res) {
+  return function searchHandle(req, res) {
     const { url } = req;
     if (url === '/favicon.ico') {
       // Prevent logging

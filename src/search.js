@@ -1,10 +1,28 @@
 
 const NEAR = 3.0;
-const MIN_KEYWORD_LEN = 1;
 const KM = 1.609344;
 // Indexes in location array
 const LON = 0;
 const LAT = 1;
+
+function searchFromName(name, keyword) {
+  return name.toUpperCase().includes(keyword.toUpperCase());
+}
+
+function searchFromDescription(desc, keyword) {
+  return desc.toUpperCase().includes(keyword.toUpperCase());
+}
+
+function searchFromTags(tags, keyword) {
+  let i = 0;
+  while (i < tags.length) {
+    if (tags[i].toUpperCase().includes(keyword.toUpperCase())) {
+      return true;
+    }
+    i += 1;
+  }
+  return false;
+}
 
 // https://www.geodatasource.com/developers/javascript
 function calcDistance(lat1, lon1, lat2, lon2) {
@@ -25,25 +43,6 @@ function calcDistance(lat1, lon1, lat2, lon2) {
   dist = dist * 60 * 1.1515;
   dist *= KM;
   return dist;
-}
-
-function searchFromName(name, keyword) {
-  return name.toUpperCase().includes(keyword.toUpperCase());
-}
-
-function searchFromDescription(desc, keyword) {
-  return desc.toUpperCase().includes(keyword.toUpperCase());
-}
-
-function searchFromTags(tags, keyword) {
-  let i = 0;
-  while (i < tags.length) {
-    if (tags[i].toUpperCase().includes(keyword.toUpperCase())) {
-      return true;
-    }
-    i += 1;
-  }
-  return false;
 }
 
 // Check not 0
