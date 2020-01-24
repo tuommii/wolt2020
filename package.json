@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Miikka Tuominen",
   "description": "Summer 2020 Internships - Engineering Pre-assignment",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "npm run main",
     "main": "PORT=3000 node src/server.js",
