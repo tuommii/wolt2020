@@ -45,7 +45,6 @@ function calcDistance(lat1, lon1, lat2, lon2) {
   return dist;
 }
 
-// Check not 0
 function isNear(distance, location, lat, lon) {
   return (calcDistance(location[LAT], location[LON], lat, lon) < distance);
 }
