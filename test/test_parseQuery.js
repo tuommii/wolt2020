@@ -3,8 +3,8 @@
 const assert = require("assert");
 const parseQuery = require("../src/parseQuery");
 
-describe("parseQuery", () => {
-  describe("null tests", () => {
+describe("parseQuery()", () => {
+  describe("should return null", () => {
     const url = "/restaurants/search?q=sushi";
     const url2 = "/error/search?q=sushi&lat=60.17045&lon=24.93147";
     const url3 = "/restaurants/";
@@ -14,34 +14,34 @@ describe("parseQuery", () => {
     const url7 = "/restaurants/search?q=sushi&lat=abc&lon=24.93147";
     const url8 = "/restaurants/search?q=sushi&lat=60.17045&lon=abc";
 
-    it("should return null if no lat and lon provided", () => {
+    it("if no lat and lon provided", () => {
       assert.equal(parseQuery(url), null);
     });
-    it("should return null if url doesn't start with /restaurants/", () => {
+    it("if url doesn't start with /restaurants/", () => {
       assert.equal(parseQuery(url2), null);
     });
     // NOTE: Maybe change this to return all restaurants
-    it("should return null if url contains only /restaurants/", () => {
+    it("if url contains only /restaurants/", () => {
       assert.equal(parseQuery(url3), null);
     });
-    it("should return null if no querystring provided", () => {
+    it("if no querystring provided", () => {
       assert.equal(parseQuery(url4), null);
     });
-    it("should return null if no lat provided", () => {
+    it("if no lat provided", () => {
       assert.equal(parseQuery(url5), null);
     });
-    it("should return null if no lon provided", () => {
+    it("if no lon provided", () => {
       assert.equal(parseQuery(url6), null);
     });
-    it("should return null if lat is NaN", () => {
+    it("if lat is NaN", () => {
       assert.equal(parseQuery(url7), null);
     });
-    it("should return null if lon is NaN", () => {
+    it("if lon is NaN", () => {
       assert.equal(parseQuery(url8), null);
     });
   });
 
-  describe("valid tests", () => {
+  describe("query should be valid", () => {
     const url = "/restaurants/search?q=sushi&lat=60.17045&lon=24.93147";
     const url2 = "/restaurants/search?q=sushi&lat=60.17045&lon=24.93147&name=miikka";
     const wanted = {
@@ -49,10 +49,10 @@ describe("parseQuery", () => {
       lat: "60.17045",
       lon: "24.93147",
     };
-    it("should be valid if all data is provided", () => {
+    it("if all data is provided", () => {
       assert.deepEqual(parseQuery(url), wanted);
     });
-    it("should be valid if extra data is also provided", () => {
+    it("if extra data is also provided", () => {
       assert.deepEqual(parseQuery(url2), wanted);
     });
   });
