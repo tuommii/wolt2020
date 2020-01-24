@@ -5,8 +5,8 @@
 ## My solution
 * Endpoint accepts only POST-requests
 * Case insensitive search
+* Query must be legal and present, otherwise only some ***message*** is returned
 * Server prettifies returned json data
-* Query must be legal and present, otherwise only error message is returned
 * No external dependencies - **No technical debt**
 * Minimizing magic numbers - **Easier to Read**
 * Eslint with airbnb-base - Like
@@ -27,6 +27,7 @@ Mocha is used for testing so:
 
 ## Testing endpoint with curl
 ```curl -H "Content-Type: application/x-www-form-urlencoded" -X POST "http://localhost:3000/restaurants/search?q=City&lat=60.17045&lon=24.93147"```
+```curl -H "Content-Type: application/x-www-form-urlencoded" -X POST "http://localhost:3000/restaurants/search?q=K%C3%A4si&lat=60.17045&lon=24.93147"```
 
 ## Links
 * My [Github Profile](https://github.com/tuommii)
