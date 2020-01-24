@@ -21,7 +21,7 @@ So just run:
 ## Test endpoint with curl
 ```curl -i -H "Content-Type: application/x-www-form-urlencoded" -X POST "http://localhost:3000/restaurants/search?q=City&lat=60.17045&lon=24.93147"```
 
-```curl -i -H "Content-Type: application/x-www-form-urlencoded" -X POST "http://localhost:3000/restaurants/search?q=K%C3%A4si&lat=60.17045&lon=24.93147"```
+```curl -i -H "Content-Type: application/x-www-form-urlencoded" -X POST "http://localhost:3000/restaurants/search?q=K%C3%A4sint&lat=60.17045&lon=24.93147"```
 
 ## How to test it
 Mocha is used for testing:
