@@ -1,10 +1,9 @@
-const assert = require('assert');
-const parseQuery = require('../src/router.js');
-
 /* eslint quotes: [2, "double"] */
+
+const assert = require("assert");
+const parseQuery = require("../src/router.js");
+
 describe("parseQuery", () => {
-
-
   describe("null tests", () => {
     const url = "/restaurants/search?q=sushi";
     const url2 = "/error/search?q=sushi&lat=60.17045&lon=24.93147";
@@ -57,5 +56,4 @@ describe("parseQuery", () => {
       assert.deepEqual(parseQuery(url2), wanted);
     });
   });
-
 });
