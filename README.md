@@ -1,4 +1,4 @@
-# Backend for Wolt's Summer2020 Internships Engineering Pre-assignment
+# Backend for Summer 2020 Internships Engineering Pre-assignment
 
 [Assignment](https://github.com/woltapp/summer2020) was **very fun**!
 

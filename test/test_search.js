@@ -1,23 +1,22 @@
+const fs = require("fs");
 const assert = require("assert");
 const search = require("../src/search.js");
-const getAllRestaurants = require("../src/server");
+const getAllRestaurants = require("../src/db.js");
+
+const PASILA = [60.2006685, 24.9253993];
+const EIRA = [60.1560565, 24.9374314];
+
+// function getAllRestaurants(path) {
+// 	const raw = fs.readFileSync(path);
+// 	const data = JSON.parse(raw);
+// 	return data.restaurants;
+// }
 
 describe("search", () => {
-	const restaurants = getAllRestaurants
-    const url = "/restaurants/search?q=sushi&lat=60.17045&lon=24.93147";
-    const url2 = "/restaurants/search?q=sushi&lat=60.17045&lon=24.93147&name=miikka";
-    const query = {
-      str: "sushi",
-      lat: "60.17045",
-      lon: "24.93147",
-	};
 
-	// search(anted)
+	let restaurants = getAllRestaurants("restaurants.json");
 
-    it("should be valid if all data is provided", () => {
-      assert.deepEqual(1, 1);
-    });
-    // it("should be valid if extra data is also provided", () => {
-    //   assert.deepEqual(parseQuery(url2), wanted);
-    // });
-  });
+	it("50 restaurants object loaded", () => {
+	  assert.equal(restaurants.length, 50);
+	});
+});
