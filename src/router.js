@@ -2,6 +2,7 @@ const qs = require('querystring');
 
 function createQuery(str) {
   const obj = qs.parse(str);
+  console.log(obj);
   const query = {
     str: obj['/search?q'],
     lat: obj.lat,

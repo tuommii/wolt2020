@@ -1,7 +1,7 @@
 
 const NEAR = 3.0;
 const KM = 1.609344;
-// Indexes in location array
+// Indexes in restaurants location array
 const LON = 0;
 const LAT = 1;
 
