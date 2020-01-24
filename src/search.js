@@ -1,6 +1,7 @@
 
+const distance = require('./distance.js');
+
 const NEAR = 3.0;
-const KM = 1.609344;
 // Indexes in restaurants location array
 const LON = 0;
 const LAT = 1;
@@ -24,42 +25,21 @@ function searchFromTags(tags, keyword) {
   return false;
 }
 
-// https://www.geodatasource.com/developers/javascript
-function calcDistance(lat1, lon1, lat2, lon2) {
-  if ((lat1 === lat2) && (lon1 === lon2)) {
-    return 0;
-  }
-  const radlat1 = (Math.PI * lat1) / 180;
-  const radlat2 = (Math.PI * lat2) / 180;
-  const theta = lon1 - lon2;
-  const radtheta = (Math.PI * theta) / 180;
-  let dist = Math.sin(radlat1) * Math.sin(radlat2);
-  dist += Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-  if (dist > 1) {
-    dist = 1;
-  }
-  dist = Math.acos(dist);
-  dist = (dist * 180) / Math.PI;
-  dist = dist * 60 * 1.1515;
-  dist *= KM;
-  return dist;
-}
-
-function isNear(distance, location, lat, lon) {
-  return (calcDistance(location[LAT], location[LON], lat, lon) < distance);
+function isNear(maxDistance, location, lat, lon) {
+  return (distance(location[LAT], location[LON], lat, lon) < maxDistance);
 }
 
 function search(keyword, lat, lon) {
-  return function applyFilters(elem) {
-    // Doesn't matter if keyword is found when distance is >= 3.0
-    if (!(isNear(NEAR, elem.location, lat, lon))) {
+  return function applyFilters(restaurant) {
+    // Doesn't matter if keyword is found when distance is >= NEAR
+    if (!(isNear(NEAR, restaurant.location, lat, lon))) {
       return (false);
     }
-    if (searchFromName(elem.name, keyword)) {
+    if (searchFromName(restaurant.name, keyword)) {
       return (true);
-    } if (searchFromDescription(elem.description, keyword)) {
+    } if (searchFromDescription(restaurant.description, keyword)) {
       return (true);
-    } if (searchFromTags(elem.tags, keyword)) {
+    } if (searchFromTags(restaurant.tags, keyword)) {
       return (true);
     }
     return (false);

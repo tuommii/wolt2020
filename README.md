@@ -1,14 +1,16 @@
 # Backend for Summer 2020 Internships Engineering Pre-assignment
 
-[Assignment](https://github.com/woltapp/summer2020) was **very fun**!
+I think [assignment](https://github.com/woltapp/summer2020) was **very fun** and well planned!
 
 ## My solution
+* No external dependencies - **No technical debt**
 * Endpoint accepts only POST-requests (user creates a query)
 * Case insensitive search
-* Query must be legal and present, otherwise only some ***message*** is returned
-* For this subject, server prettifies returned json data
-* No external dependencies - **No technical debt**
+* Query must be legal and present, otherwise only  _message_ is returned
+* For this subject, server prettifies json data
 * Minimizing magic numbers - **Easier to Read**
+* No globals used (only constants)
+* Server handles couple different HTTP Statuses
 * Eslint with airbnb-base - Like
 Wolt [seem's](https://github.com/woltapp/redux-autoloader/blob/master/.eslintrc) to use
 
@@ -23,7 +25,7 @@ So just run:
 
 ```curl -i -H "Content-Type: application/x-www-form-urlencoded" -X POST "http://localhost:3000/restaurants/search?q=K%C3%A4sint&lat=60.17045&lon=24.93147"```
 
-## How to test it
+## How to test code
 Mocha is used for testing:
 
 ```npm i```

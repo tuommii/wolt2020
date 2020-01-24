@@ -1,7 +1,7 @@
 /* eslint quotes: [2, "double"] */
 
 const assert = require("assert");
-const parseQuery = require("../src/router.js");
+const parseQuery = require("../src/parseQuery");
 
 describe("parseQuery", () => {
   describe("null tests", () => {
