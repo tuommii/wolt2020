@@ -41,7 +41,7 @@ describe("parseQuery", () => {
     });
   });
 
-  describe("legal tests", () => {
+  describe("valid tests", () => {
     const url = "/restaurants/search?q=sushi&lat=60.17045&lon=24.93147";
     const url2 = "/restaurants/search?q=sushi&lat=60.17045&lon=24.93147&name=miikka";
     const wanted = {
