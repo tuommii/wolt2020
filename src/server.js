@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const search = require('./search.js');
-const parseQuery = require('./parser.js');
+const parseQuery = require('./router.js');
 
 function getAllRestaurants() {
   const raw = fs.readFileSync('./restaurants.json');
@@ -10,8 +10,9 @@ function getAllRestaurants() {
 }
 
 function createEndpoint(restaurants) {
-	return function searchHandle(req, res) {
-    if ((query = parseQuery(req.url)) === null) {
+  return function searchHandle(req, res) {
+    const query = parseQuery(req.url);
+    if (query === null) {
       res.write('{"message": "Error"}');
       res.end();
       return;

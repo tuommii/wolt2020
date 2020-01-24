@@ -1,25 +1,20 @@
 const assert = require('assert');
-const parseQuery = require('../src/parser.js');
+const parseQuery = require('../src/router.js');
 
-describe('Array', () => {
-  describe('#indexOf()', () => {
-    it('should return -1 when not present', () => {
-      assert.equal([1, 2, 3].indexOf(4), -1);
-    });
-  });
-});
+/* eslint quotes: [2, "double"] */
+describe("parseQuery", () => {
 
-describe('parseQuery', () => {
-  const url = "/restaurants/search?q=sushi";
-  const url2 = "/error/search?q=sushi&lat=60.17045&lon=24.93147";
-  const url3 = "/restaurants/";
-  const url4 = "/restaurants/search?q=&lat=60.17045&lon=24.93147";
-  const url5 = "/restaurants/search?q=sushi&lat=&lon=24.93147";
-  const url6 = "/restaurants/search?q=sushi&lat=60.17045&lon=";
-  const url7 = "/restaurants/search?q=sushi&lat=abc&lon=24.93147";
-  const url8 = "/restaurants/search?q=sushi&lat=60.17045&lon=abc";
 
-  describe('null tests', () => {
+  describe("null tests", () => {
+    const url = "/restaurants/search?q=sushi";
+    const url2 = "/error/search?q=sushi&lat=60.17045&lon=24.93147";
+    const url3 = "/restaurants/";
+    const url4 = "/restaurants/search?q=&lat=60.17045&lon=24.93147";
+    const url5 = "/restaurants/search?q=sushi&lat=&lon=24.93147";
+    const url6 = "/restaurants/search?q=sushi&lat=60.17045&lon=";
+    const url7 = "/restaurants/search?q=sushi&lat=abc&lon=24.93147";
+    const url8 = "/restaurants/search?q=sushi&lat=60.17045&lon=abc";
+
     it("should return null if no lat and lon provided", () => {
       assert.equal(parseQuery(url), null);
     });
@@ -47,13 +42,13 @@ describe('parseQuery', () => {
     });
   });
 
-  describe('legal tests', () => {
+  describe("legal tests", () => {
     const url = "/restaurants/search?q=sushi&lat=60.17045&lon=24.93147";
     const url2 = "/restaurants/search?q=sushi&lat=60.17045&lon=24.93147&name=miikka";
     const wanted = {
       str: "sushi",
       lat: "60.17045",
-      lon: "24.93147"
+      lon: "24.93147",
     };
     it("should be valid if all data is provided", () => {
       assert.deepEqual(parseQuery(url), wanted);
