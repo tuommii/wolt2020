@@ -31,7 +31,3 @@ Mocha is used for testing:
 
 ```npm test```
 
-
-## Links
-* My [Github Profile](https://github.com/tuommii)
-* My [LinkedIn](www.linkedin.com/in/miikka-tuominen-dev)
