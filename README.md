@@ -3,12 +3,12 @@
 I think [assignment](https://github.com/woltapp/summer2020) was **very fun** and well planned!
 
 ## My solution
-* No external dependencies - **No technical debt**
+* No external dependencies
 * Endpoint accepts only POST-requests (user creates a query)
 * Case-insensitive search
 * Query must be legal and present, otherwise only  _message_ is returned
 * For this subject, server prettifies json data
-* Minimizing magic numbers - **Easier to Read**
+* Minimizing magic numbers
 * No globals used (only constants)
 * Server handles couple different HTTP Statuses
 * Eslint with airbnb-base - Like
